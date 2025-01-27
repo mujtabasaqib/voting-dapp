@@ -14,150 +14,113 @@ export type Votingdapp = {
   },
   "instructions": [
     {
-      "name": "close",
+      "name": "initializePoll",
       "discriminator": [
-        98,
-        165,
-        201,
-        177,
-        108,
-        65,
-        206,
-        96
-      ],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "votingdapp",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "decrement",
-      "discriminator": [
-        106,
-        227,
-        168,
-        59,
-        248,
-        27,
-        150,
-        101
-      ],
-      "accounts": [
-        {
-          "name": "votingdapp",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "increment",
-      "discriminator": [
-        11,
+        193,
+        22,
+        99,
+        197,
         18,
-        104,
-        9,
-        104,
-        174,
-        59,
-        33
+        33,
+        115,
+        117
       ],
       "accounts": [
         {
-          "name": "votingdapp",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "initialize",
-      "discriminator": [
-        175,
-        175,
-        109,
-        31,
-        13,
-        152,
-        155,
-        237
-      ],
-      "accounts": [
-        {
-          "name": "payer",
+          "name": "signer",
           "writable": true,
           "signer": true
         },
         {
-          "name": "votingdapp",
+          "name": "pollAccount",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  108,
+                  108
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "pollId"
+              }
+            ]
+          }
         },
         {
           "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
-    },
-    {
-      "name": "set",
-      "discriminator": [
-        198,
-        51,
-        53,
-        241,
-        116,
-        29,
-        126,
-        194
-      ],
-      "accounts": [
-        {
-          "name": "votingdapp",
-          "writable": true
-        }
-      ],
       "args": [
         {
-          "name": "value",
-          "type": "u8"
+          "name": "pollId",
+          "type": "u64"
+        },
+        {
+          "name": "startTime",
+          "type": "u64"
+        },
+        {
+          "name": "endTime",
+          "type": "u64"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
         }
       ]
     }
   ],
   "accounts": [
     {
-      "name": "votingdapp",
+      "name": "pollAccount",
       "discriminator": [
-        255,
-        176,
-        4,
-        245,
-        188,
-        253,
-        124,
-        25
+        109,
+        254,
+        117,
+        41,
+        232,
+        74,
+        172,
+        45
       ]
     }
   ],
   "types": [
     {
-      "name": "votingdapp",
+      "name": "pollAccount",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "count",
-            "type": "u8"
+            "name": "pollName",
+            "type": "string"
+          },
+          {
+            "name": "pollDescription",
+            "type": "string"
+          },
+          {
+            "name": "pollVotingStart",
+            "type": "u64"
+          },
+          {
+            "name": "pollVotingEnd",
+            "type": "u64"
+          },
+          {
+            "name": "pollOptionIndex",
+            "type": "u64"
           }
         ]
       }
