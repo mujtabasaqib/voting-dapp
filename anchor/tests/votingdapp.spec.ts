@@ -1,7 +1,7 @@
 //import * as anchor from '@coral-xyz/anchor'
 import { BankrunProvider, startAnchor } from "anchor-bankrun";
 import {BN, Program} from '@coral-xyz/anchor'
-import {Keypair, PublicKey} from '@solana/web3.js'
+import {PublicKey} from '@solana/web3.js'
 import {Votingdapp} from '../target/types/votingdapp' //imp 
 //idl
 const IDL = require('../target/idl/votingdapp.json'); //imp
@@ -51,21 +51,68 @@ it('Initialize Candidate', async () => {
     "Donald Trump"
 ).rpc();
 
+await votingProgram.methods.initializeCandidate(
+  new BN(1),
+  "Joe Biden"
+).rpc();
 
 const [candidateAddress] = PublicKey.findProgramAddressSync(
   [new BN(1).toArrayLike(Buffer, "le", 8), Buffer.from("Donald Trump")],
   votingAddress
 );
 
+const [candidateAddress1] = PublicKey.findProgramAddressSync(
+  [new BN(1).toArrayLike(Buffer, "le", 8), Buffer.from("Joe Biden")],
+  votingAddress
+);
+
 const candidate = await votingProgram.account.candidateAccount.fetch(candidateAddress);
-console.log(candidate);
+//console.log(candidate);
+
+const candidate1 = await votingProgram.account.candidateAccount.fetch(candidateAddress1);
 
 expect(candidate.candidateName).toBe("Donald Trump");
+expect(candidate1.candidateName).toBe("Joe Biden");
 
 });
 
 
 it('Vote', async () => {
+  await votingProgram.methods.vote(
+    new BN(1),
+    "Donald Trump"
+).rpc();
+
+
+await votingProgram.methods.vote(
+  new BN(1),
+  "Joe Biden"
+).rpc();
+
+await votingProgram.methods.vote(
+  new BN(1),
+  "Donald Trump"
+).rpc();
+
+const [candidateAddress] = PublicKey.findProgramAddressSync(
+  [new BN(1).toArrayLike(Buffer, "le", 8), Buffer.from("Donald Trump")],
+  votingAddress
+);
+
+const [candidateAddress1] = PublicKey.findProgramAddressSync(
+  [new BN(1).toArrayLike(Buffer, "le", 8), Buffer.from("Joe Biden")],
+  votingAddress
+);
+
+const trump = await votingProgram.account.candidateAccount.fetch(candidateAddress);
+console.log(trump);
+
+const biden = await votingProgram.account.candidateAccount.fetch(candidateAddress1);
+console.log(biden);
+
+expect(Number(trump.candidateVotes)).toBe(2);
+expect(Number(biden.candidateVotes)).toBe(1);
+
 });
 
 
