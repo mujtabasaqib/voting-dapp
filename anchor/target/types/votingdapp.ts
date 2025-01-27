@@ -36,15 +36,6 @@ export type Votingdapp = {
           "pda": {
             "seeds": [
               {
-                "kind": "const",
-                "value": [
-                  112,
-                  111,
-                  108,
-                  108
-                ]
-              },
-              {
                 "kind": "arg",
                 "path": "pollId"
               }
@@ -107,15 +98,6 @@ export type Votingdapp = {
           "pda": {
             "seeds": [
               {
-                "kind": "const",
-                "value": [
-                  112,
-                  111,
-                  108,
-                  108
-                ]
-              },
-              {
                 "kind": "arg",
                 "path": "pollId"
               }
@@ -173,15 +155,6 @@ export type Votingdapp = {
           "writable": true,
           "pda": {
             "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  111,
-                  108,
-                  108
-                ]
-              },
               {
                 "kind": "arg",
                 "path": "pollId"

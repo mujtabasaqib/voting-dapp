@@ -26,6 +26,7 @@ pub mod votingdapp {
     _poll_id: u64, 
     candidate: String) -> Result<()> {
       ctx.accounts.candidate_account.candidate_name = candidate;
+      ctx.accounts.candidate_account.candidate_votes = 0;
       ctx.accounts.poll_account.poll_option_index += 1;
       Ok(())
   }
@@ -60,7 +61,7 @@ pub struct InitializePoll<'info> {
         init,
         payer = signer,
         space = 8 + PollAccount::INIT_SPACE,
-        seeds = [b"poll".as_ref(), poll_id.to_le_bytes().as_ref()],
+        seeds = [poll_id.to_le_bytes().as_ref()],
         bump 
     )]
     pub poll_account: Account<'info, PollAccount>,
@@ -74,7 +75,7 @@ pub struct InitializeCandidate<'info> {
     pub signer: Signer<'info>,
 
     #[account(
-        seeds = [b"poll".as_ref(), poll_id.to_le_bytes().as_ref()],
+        seeds = [poll_id.to_le_bytes().as_ref()],
         bump,
     )]
 
@@ -100,7 +101,7 @@ pub struct Vote<'info> {
 
     #[account(
         mut,
-        seeds = [b"poll".as_ref(), poll_id.to_le_bytes().as_ref()],
+        seeds = [poll_id.to_le_bytes().as_ref()],
         bump,
     )]
     pub poll_account: Account<'info, PollAccount>,
